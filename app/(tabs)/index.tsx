@@ -64,7 +64,7 @@ export default class App extends Component {
           <Button label={'3'}  onClick={() => this.addDigito(3)}></Button>
           <Button label={'+'} operation onClick={() => this.setOperation}></Button>
           <Button label={'0'}  onClick={() => this.addDigito(0)}></Button>
-          <Button label={'.'} operation onClick={() => this.setOperation('.')}></Button>
+          <Button label={'.'} operation onClick={() => this.addDigito('.')}></Button>
           <Button label={'='} operation onClick={() => this.setOperation}></Button>
         </View>
       </View>
