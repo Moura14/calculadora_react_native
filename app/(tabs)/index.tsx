@@ -40,7 +40,27 @@ export default class App extends Component {
    this.setState({...initialState})
   }
 
-  setOperation = (_operation: string) => {
+  setOperation = (operation: string) => {
+    if(this.state.current === 0){
+      this.setState({operation, current: 1, clearDisplay: true})
+    }else{
+      const equals = operation === '='
+      const values = [...this.state.values]
+      try{
+        values[0] = eval(`${values[0]} ${this.state.operation} ${values[1]}`)
+      }catch (e){
+        values[0] = this.state.values[0]
+      }
+      values[1] = 0
+      this.setState({
+        displayValue: values[0],
+        operation: equals ? null : operation,
+        current: equals ? 0 : 1,
+        clearDisplay: !equals,
+        values
+
+      })
+    }
 
   }
 
@@ -54,18 +74,18 @@ export default class App extends Component {
           <Button label='7' onClick={() => this.addDigito(7)}></Button>
           <Button label={'8'} onClick={() => this.addDigito(8)}></Button>
           <Button label={'9'} onClick={() => this.addDigito(9)}></Button>
-          <Button label={'*'} operation onClick={() => this.setOperation}></Button>
+          <Button label={'*'} operation onClick={() => this.setOperation('*')}></Button>
           <Button label={'4'} onClick={() => this.addDigito(4)}></Button>
           <Button label={'5'}  onClick={() => this.addDigito(5)}></Button>
           <Button label={'6'}  onClick={() => this.addDigito(6)}></Button>
-          <Button label={'-'} operation onClick={() => this.setOperation}></Button>
-          <Button label={'1'}  onClick={() => this.addDigito(2)}></Button>
+          <Button label={'-'} operation onClick={() => this.setOperation('-')}></Button>
+          <Button label={'1'}  onClick={() => this.addDigito(1)}></Button>
           <Button label={'2'}  onClick={() => this.addDigito(2)}></Button>
           <Button label={'3'}  onClick={() => this.addDigito(3)}></Button>
-          <Button label={'+'} operation onClick={() => this.setOperation}></Button>
+          <Button label={'+'} operation onClick={() => this.setOperation('+')}></Button>
           <Button label={'0'}  onClick={() => this.addDigito(0)}></Button>
-          <Button label={'.'} operation onClick={() => this.addDigito('.')}></Button>
-          <Button label={'='} operation onClick={() => this.setOperation}></Button>
+          <Button label={'.'} operation onClick={() => this.setOperation('.')}></Button>
+          <Button label={'='} operation onClick={() => this.setOperation('=')}></Button>
         </View>
       </View>
     );
